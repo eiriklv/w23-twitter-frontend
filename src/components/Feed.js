@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { getTweets } from "../services/tweets";
+import ErrorMessage from "./ErrorMessage";
 import Tweet from "./Tweet";
 
 class Feed extends Component {
@@ -58,12 +59,10 @@ class Feed extends Component {
 
     if (error) {
       return (
-        <div>
-          <h3>Unable to fetch tweets: {error.message}</h3>
-          <button onClick={this.handlePopulateTweets.bind(this)}>
-            Retry
-          </button>
-        </div>
+        <ErrorMessage
+          message={error.message}
+          onRetry={this.handlePopulateTweets.bind(this)}
+        />
       );
     }
 
