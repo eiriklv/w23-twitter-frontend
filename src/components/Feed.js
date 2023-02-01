@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { getTweets } from "../services/tweets";
+import { createTweet, getTweets } from "../services/tweets";
 import ErrorMessage from "./ErrorMessage";
 import Tweet from "./Tweet";
 
@@ -21,13 +21,16 @@ class Feed extends Component {
     });
   }
 
-  handleSubmitNewTweet() {
+  async handleSubmitNewTweet() {
+    const { newTweetText } = this.state;
     // POST / create new tweet through API
+    await createTweet(newTweetText);
 
     // Clear text area
     this.setState({ newTweetText: '' });
     
     // Refetch tweets
+    this.handlePopulateTweets();
   }
 
   async componentDidMount() {

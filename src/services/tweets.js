@@ -11,3 +11,18 @@ export async function getTweetsByUsername(username) {
   const data = await response.json();
   return data;
 }
+
+export async function createTweet(text) {
+  const response = await fetch(`${TWITTER_API_URL}/tweets`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-User': 'santaclaus'
+    },
+    body: JSON.stringify({
+      text
+    })
+  });
+  const data = await response.json();
+  return data;
+}
