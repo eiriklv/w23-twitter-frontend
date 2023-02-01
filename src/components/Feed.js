@@ -10,7 +10,23 @@ class Feed extends Component {
       tweets: [],
       isLoading: true,
       error: null,
+      newTweetText: '',
     }
+  }
+
+  handleChangeNewTweetText(event) {
+    this.setState({
+      newTweetText: event.target.value
+    });
+  }
+
+  handleSubmitNewTweet() {
+    // POST / create new tweet through API
+
+    // Clear text area
+    this.setState({ newTweetText: '' });
+    
+    // Refetch tweets
   }
 
   async componentDidMount() {
@@ -38,7 +54,7 @@ class Feed extends Component {
   }
 
   render() {
-    const { error, isLoading, tweets } = this.state;
+    const { error, isLoading, tweets, newTweetText } = this.state;
 
     if (error) {
       return (
@@ -65,6 +81,20 @@ class Feed extends Component {
     return (
       <div>
         <h1>Feed</h1>
+        <div>
+          <label>
+            Write a new tweet:
+            <div>
+              <textarea
+                rows="3"
+                value={newTweetText}
+                onChange={this.handleChangeNewTweetText.bind(this)} />
+            </div>
+          </label>
+          <button onClick={this.handleSubmitNewTweet.bind(this)}>
+            Submit tweet
+          </button>
+        </div>
         <div>{tweetElements}</div>
       </div>
     );
