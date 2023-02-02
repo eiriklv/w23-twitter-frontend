@@ -3,6 +3,7 @@ import { createTweet, getTweets } from "../services/tweets";
 import ErrorMessage from "./ErrorMessage";
 import Tweet from "./Tweet";
 import jwtDecode from 'jwt-decode';
+import { Link } from "react-router-dom";
 
 class Feed extends Component {
   constructor(props) {
@@ -102,6 +103,7 @@ class Feed extends Component {
     return (
       <div>
         <h1>Feed (logged in as {user.name})</h1>
+        <Link to="/logout">Log out</Link>
         <div>
           <label>
             Write a new tweet:
