@@ -17,10 +17,25 @@ export async function createTweet(text) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-User': 'santaclaus'
+      'X-Token': localStorage.getItem('TWITTER_TOKEN'),
     },
     body: JSON.stringify({
       text
+    })
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function getLoginToken(username, password) {
+  const response = await fetch(`${TWITTER_API_URL}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      username,
+      password
     })
   });
   const data = await response.json();

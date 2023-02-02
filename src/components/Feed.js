@@ -34,6 +34,13 @@ class Feed extends Component {
   }
 
   async componentDidMount() {
+    // Check if we have a token in local storage
+
+    // If not - redirect to /login
+
+    // Else - get info from token and show in UI
+
+    // Fetch tweets from server
     await this.handlePopulateTweets();
   }
 
