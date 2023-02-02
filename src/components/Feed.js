@@ -2,6 +2,7 @@ import { Component } from "react";
 import { createTweet, getTweets } from "../services/tweets";
 import ErrorMessage from "./ErrorMessage";
 import Tweet from "./Tweet";
+import jwtDecode from 'jwt-decode';
 
 class Feed extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Feed extends Component {
       isLoading: true,
       error: null,
       newTweetText: '',
+      user: {},
     }
   }
 
@@ -34,11 +36,21 @@ class Feed extends Component {
   }
 
   async componentDidMount() {
+    const { history } = this.props;
     // Check if we have a token in local storage
+    const token = localStorage.getItem('TWITTER_TOKEN');
 
     // If not - redirect to /login
+    if (!token) {
+      history.replace('/login');
+      return;
+    }
 
     // Else - get info from token and show in UI
+    const payload = jwtDecode(token);
+    this.setState({
+      user: payload
+    });
 
     // Fetch tweets from server
     await this.handlePopulateTweets();
@@ -65,7 +77,7 @@ class Feed extends Component {
   }
 
   render() {
-    const { error, isLoading, tweets, newTweetText } = this.state;
+    const { error, isLoading, tweets, newTweetText, user } = this.state;
 
     if (error) {
       return (
@@ -89,7 +101,7 @@ class Feed extends Component {
 
     return (
       <div>
-        <h1>Feed</h1>
+        <h1>Feed (logged in as {user.name})</h1>
         <div>
           <label>
             Write a new tweet:
