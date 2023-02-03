@@ -1,4 +1,4 @@
-const TWITTER_API_URL = 'http://localhost:3333';
+const TWITTER_API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3333';
 
 export async function getTweets() {
   const response = await fetch(`${TWITTER_API_URL}/tweets`);
